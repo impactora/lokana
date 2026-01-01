@@ -2,8 +2,8 @@
 import { onMounted } from "vue";
 import initMap from "~/composables/initMap";
 
-onMounted(() => {
-    initMap();
+onMounted(async () => {
+    await initMap();
 });
 </script>
 
@@ -17,11 +17,3 @@ onMounted(() => {
         <div id="map"></div>
     </div>
 </template>
-
-<style>
-#map {
-    height: 100vh;
-    width: 100%;
-}
-/* Style dasar agar map tidak ketutup */
-</style>

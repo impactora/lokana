@@ -1,4 +1,4 @@
-import L from "leaflet";
+// import L from "leaflet";
 import artifactsData from "~/assets/data/artifactsData";
 
 // STATE
@@ -9,9 +9,10 @@ let activeFilter = "all";
 let searchQuery = "";
 
 // MAIN FUNCTION
-export default function initMap() {
-  if (map) return;
+export default async function initMap() {
+  if (typeof window === "undefined") return;
 
+  const L = (await import("leaflet")).default;
   map = L.map("map").setView([-2.5489, 118.0149], 5);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -24,7 +25,9 @@ export default function initMap() {
 }
 
 // LOGIC & GEOLOCATION
-function requestGeolocation() {
+async function requestGeolocation() {
+  const L = (await import("leaflet")).default;
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -123,7 +126,9 @@ function calculateDistance(lat1: any, lon1: any, lat2: any, lon2: any) {
   return R * c;
 }
 
-function addMuseumMarkers() {
+async function addMuseumMarkers() {
+  const L = (await import("leaflet")).default;
+
   Object.values(markers).forEach((marker) => {
     map.removeLayer(marker);
   });

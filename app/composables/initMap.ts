@@ -4,7 +4,7 @@ import artifactsData from "~/assets/data/artifactsData";
 // STATE
 let map: any;
 let userLocation: { lat: number; lng: number } | null = null;
-let markers: Record<string, L.Marker> = {};
+let markers: Record<string, any> = {};
 let activeFilter = "all";
 let searchQuery = "";
 

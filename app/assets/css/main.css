@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Outfit:wght@100..900&display=swap");
+
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme {
+    --font-primary: "Lexend Deca", sans-serif;
+    --color-secondary: #6e6e6e;
+    --color-background: #f4eee6;
+}
+
+* {
+    font-family: var(--font-primary);
+}

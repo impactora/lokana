@@ -174,11 +174,11 @@ async function addMuseumMarkers() {
         <div class="min-w-[240px] max-w-[280px]">
             <div class="flex items-center gap-2 border-b border-gray-100 pb-3 mb-2">
                 <span class="text-xl">🏛️</span>
-                <div>
-                    <h3 class="font-bold text-gray-900 text-sm leading-tight">
+                <div class="flex flex-col gap-0.5">
+                    <h3 class="font-bold text-gray-900 text-sm leading-none">
                         ${data.museum.name}
                     </h3>
-                    <p class="text-[10px] text-gray-500 mt-0.5">
+                    <p class="text-[10px] text-gray-500 leading-tight">
                         ${data.museum.province || "Lokasi Museum"}
                     </p>
                 </div>
@@ -281,7 +281,7 @@ function renderArtifactList() {
                       >
                   </div>
 
-                  <div class="flex flex-col flex-1 min-w-0 justify-between py-0.5">
+                  <div class="flex flex-col flex-1 min-w-0 justify-center py-0.5">
                       <div>
                           <h3 class="font-bold text-gray-900 leading-tight group-hover:text-emerald-700 transition-colors line-clamp-2">
                               ${artifact.name}

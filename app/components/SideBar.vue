@@ -15,6 +15,11 @@ const filter = [
     "Lainnya",
 ];
 const search = ref("");
+const activeFilter = ref("Semua");
+
+const handleFilterClick = (item: string) => {
+    activeFilter.value = item;
+};
 </script>
 
 <template>
@@ -45,11 +50,15 @@ const search = ref("");
                     <UButton
                         v-for="item in filter"
                         :key="item"
-                        class="mr-1 filter-chip cursor-pointer flex-1"
+                        @click="handleFilterClick(item)"
+                        class="mr-1 filter-chip cursor-pointer flex-1 justify-center rounded-2xl text-[#64748B]"
+                        :class="{
+                            'bg-[#2C5C4E] text-white': activeFilter === item,
+                        }"
                         :data-filter="
                             item === 'Semua' ? 'all' : item.toLowerCase()
                         "
-                        variant="soft"
+                        variant="outline"
                     >
                         {{ item }}
                     </UButton>

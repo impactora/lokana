@@ -1,16 +1,39 @@
 import { defineStore } from 'pinia';
 
+export interface Voucher {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  xpRequired: number;
+  partner: string;
+  validUntil: string;
+}
+
+export const vouchersData: Voucher[] = [
+  { id: 'v1', name: 'Diskon 20% Batik Pekalongan', description: 'Diskon 20% untuk pembelian batik di Museum Batik Danar Hadi', image: 'https://placehold.co/200x200/FFAB91/000?text=Batik', xpRequired: 100, partner: 'Museum Batik Danar Hadi', validUntil: '2026-12-31' },
+  { id: 'v2', name: 'Tiket Gratis Anak', description: '1 tiket gratis untuk anak-anak di Museum Sonobudoyo', image: 'https://placehold.co/200x200/8D6E63/FFF?text=Museum', xpRequired: 150, partner: 'Museum Sonobudoyo', validUntil: '2026-12-31' },
+  { id: 'v3', name: 'Voucher Makanan Rp50.000', description: 'Voucher makanan Rp50.000 di sekitar museums Yogyakarta', image: 'https://placehold.co/200x200/4CAF50/FFF?text=Food', xpRequired: 200, partner: 'UMKM Lokal', validUntil: '2026-12-31' },
+  { id: 'v4', name: 'Diskon 15% Kopi Lokal', description: 'Diskon 15% untuk kopi khas Yogyakarta', image: 'https://placehold.co/200x200/795548/FFF?text=Kopi', xpRequired: 75, partner: 'Kopi Lokal Yogyakarta', validUntil: '2026-12-31' },
+  { id: 'v5', name: '免费入场 Vredeburg', description: 'Tiket masuk gratis Museum Benteng Vredeburg', image: 'https://placehold.co/200x200/5D4037/FFF?text=Vredeburg', xpRequired: 120, partner: 'Museum Benteng Vredeburg', validUntil: '2026-12-31' },
+  { id: 'v6', name: 'Workshop Batik Gratis', description: '1x免费workshop batik di Museum Batik Danar Hadi', image: 'https://placehold.co/200x200/FFAB91/000?text=Workshop', xpRequired: 300, partner: 'Museum Batik Danar Hadi', validUntil: '2026-12-31' },
+  { id: 'v7', name: 'Souvenir Keramik 30% Off', description: 'Diskon 30% untuk souvenir keramik asli Yogyakarta', image: 'https://placehold.co/200x200/1565C0/FFF?text=Keramik', xpRequired: 180, partner: 'UMKM Keramik Yogyakarta', validUntil: '2026-12-31' },
+  { id: 'v8', name: 'Tea Time Set', description: 'Tea time set gratis di cafe museum terdekat', image: 'https://placehold.co/200x200/8BC34A/FFF?text=Tea', xpRequired: 50, partner: 'Museum Cafe Partners', validUntil: '2026-12-31' },
+];
+
 // User progress and gamification state store
 export const useUserStore = defineStore('user', {
   state: () => ({
     username: 'Explorer',
     level: 1,
     currentXP: 0,
-    maxXP: 100, // XP needed for next level
+    maxXP: 100,
     coins: 0,
-    unlockedLocations: [] as string[], // Museum names that have been visited
+    unlockedLocations: [] as string[],
     collectedBadges: [] as string[],
-    visitedArtifacts: [] as number[], // Artifact IDs that have been viewed
+    visitedArtifacts: [] as number[],
+    redeemedVouchers: [] as string[],
+    quizCompletedMuseums: {} as Record<number, number>,
   }),
 
   getters: {
@@ -85,6 +108,48 @@ export const useUserStore = defineStore('user', {
         return true;
       }
       return false;
+    },
+
+    // Check if user can do quiz for a specific museum (once per week per museum)
+    canDoQuiz(museumId: number): boolean {
+      const lastQuiz = this.quizCompletedMuseums[museumId];
+      if (!lastQuiz) return true;
+      const weekInMs = 7 * 24 * 60 * 60 * 1000;
+      return Date.now() - lastQuiz >= weekInMs;
+    },
+
+    // Get time until next quiz available for a museum
+    getQuizCooldown(museumId: number): string {
+      const lastQuiz = this.quizCompletedMuseums[museumId];
+      if (!lastQuiz) return '';
+      const weekInMs = 7 * 24 * 60 * 60 * 1000;
+      const timeSince = Date.now() - lastQuiz;
+      const remaining = weekInMs - timeSince;
+      
+      if (remaining <= 0) return '';
+      
+      const days = Math.floor(remaining / (24 * 60 * 60 * 1000));
+      const hours = Math.floor((remaining % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+      
+      if (days > 0) return `${days} hari ${hours} jam`;
+      return `${hours} jam`;
+    },
+
+    // Record quiz completion for a specific museum
+    completeQuiz(museumId: number) {
+      this.quizCompletedMuseums[museumId] = Date.now();
+    },
+
+    // Redeem a voucher
+    redeemVoucher(voucherId: string): boolean {
+      if (this.redeemedVouchers.includes(voucherId)) return false;
+      this.redeemedVouchers.push(voucherId);
+      return true;
+    },
+
+    // Check if voucher is redeemed
+    isVoucherRedeemed(voucherId: string): boolean {
+      return this.redeemedVouchers.includes(voucherId);
     },
 
     // Reset progress (for demo purposes)

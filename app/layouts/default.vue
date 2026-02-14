@@ -22,6 +22,16 @@ const userStore = useUserStore();
 
           <!-- Quick actions -->
           <div class="flex items-center gap-2">
+            <NuxtLink 
+              to="/shop"
+              class="px-4 py-2 text-xs font-medium text-gray-600 hover:text-[#2C5F4F] hover:bg-emerald-50 rounded-lg transition-all flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              Toko
+            </NuxtLink>
             <button 
               class="px-4 py-2 text-xs font-medium text-gray-600 hover:text-[#2C5F4F] hover:bg-emerald-50 rounded-lg transition-all flex items-center gap-2"
               @click="userStore.resetProgress()"

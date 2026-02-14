@@ -135,47 +135,6 @@ export const museumsData: Museum[] = [
     ]
   },
   {
-    id: 3,
-    name: "Museum Batik Danar Hadi",
-    category: "seni_dan_budaya",
-    description: "Museum yang khusus menyimpan koleksi batik tradisional dan modern, termasuk batik tulis, batik cap, dan batik Printing dari berbagai daerah di Indonesia.",
-    image: "https://placehold.co/600x400/FFAB91/000?text=Museum+Batik+Danar+Hadi",
-    lat: -7.567,
-    lng: 110.816,
-    province: "Jawa Tengah",
-    address: "Jl. Jetayu No. 1, Pekalongan",
-    openingHours: "08:00 - 17:00 WIB",
-    phone: "(0285) 423785",
-    ticketPrice: "Rp 30.000",
-    philosophy: "Batik adalah filosofi hidup yang terangkum dalam setiap motif. Setiap goresan canting mengandung makna hidup, hope, and dreams of the Javanese people. Batik adalah warisan yang harus dijaga karena merupakan bagian dari identitas bangsa.",
-    historyContext: "Didirikan pada tahun 1975 oleh Hadi widodo, seorang kolektor batik tradisional. Pekalongan terkenal sebagai kota batik terbesar di Indonesia dengan tradisi yang sudah berlangsung sejak abad ke-19, menjadi pusat perdagangan batik antara Jawa dan luar Jawa.",
-    museumTheme: "Batik dan Tekstil Tradisional - Koleksi terbesar di Indonesia mencakup batik tulis, batik cap, dan batik printing dari berbagai daerah dengan lebih dari 10.000 koleksi.",
-    historicalEra: "Abad ke-19 hingga Sekarang (Kolonial Belanda, Kemerdekaan, Modern)",
-    culturalValues: ["Kesabaran", "Ketelitian", "Kreativitas", "Warisan Nenek Moyang", "Identitas Nasional"],
-    rating: 4.8,
-    totalReviews: 980,
-    quiz: [
-      {
-        question: "Berapa jumlah koleksi batik di Museum Batik Danar Hadi?",
-        options: ["5.000", "7.500", "10.000", "15.000"],
-        correctAnswer: 2,
-        xpReward: 10
-      },
-      {
-        question: "Di kota mana Museum Batik Danar Hadi berada?",
-        options: ["Yogyakarta", "Surakarta", "Pekalongan", "Semarang"],
-        correctAnswer: 2,
-        xpReward: 10
-      },
-      {
-        question: "Kapan Museum Batik Danar Hadi didirikan?",
-        options: ["1975", "1985", "1995", "2005"],
-        correctAnswer: 0,
-        xpReward: 15
-      }
-    ]
-  },
-  {
     id: 4,
     name: "Museum Benteng Vredeburg",
     category: "perang",
@@ -253,47 +212,6 @@ export const museumsData: Museum[] = [
         question: "Siapa yang menjadi tujuan utama kunjungan museum ini?",
         options: ["Wisatawan mancanegara", "Sekolah dan keluarga", "Kolektor seni", "Peneliti"],
         correctAnswer: 1,
-        xpReward: 10
-      }
-    ]
-  },
-  {
-    id: 6,
-    name: "Museum Nasional",
-    category: "nasional",
-    description: "Museum terbesar di Indonesia yang menyimpan koleksi lengkap artefak dari seluruh Nusantara, dari prasejarah hingga kolonial.",
-    image: "https://placehold.co/600x400/455A64/FFF?text=Museum+Nasional",
-    lat: -6.1754,
-    lng: 106.8224,
-    province: "DKI Jakarta",
-    address: "Jl. medan Merdeka Barat No. 12, Jakarta Pusat",
-    openingHours: "08:00 - 15:30 WIB",
-    phone: "(021) 6916861",
-    ticketPrice: "Rp 15.000",
-    philosophy: "Museum Nasional adalah rumah bersama bagi seluruh warisan budaya Indonesia. Di sini, keberagaman budaya Nusantara disatukan dalam satu atap, menunjukkan bahwa meskipun berbeda-beda, kita tetap satu jua (Bhinneka Tunggal Ika).",
-    historyContext: "Didirikan pada tahun 1778 dengan nama 'Gedung artefacts' oleh政府在combinas dengan. Merupakan museum terbesar dan tertua di Asia Tenggara dengan koleksi lebih dari 140.000 item.",
-    museumTheme: "Kekayaan Budaya Nusantara - Koleksi lengkap dari seluruh Indonesia meliputi arca, keramik, tekstil, senjata tradisional, artefak prasejarah, dan seni立体.",
-    historicalEra: "Prasejarah hingga Abad ke-20 (Zaman Praaksara, Kerajaan Kuno, Kolonial, Kemerdekaa)",
-    culturalValues: ["Persatuan", "Keberagaman", "Kebanggaan Nasional", "Pelestarian", "Warisan Dunia"],
-    rating: 4.6,
-    totalReviews: 5420,
-    quiz: [
-      {
-        question: "Berapa jumlah koleksi di Museum Nasional?",
-        options: ["50.000", "100.000", "140.000", "200.000"],
-        correctAnswer: 2,
-        xpReward: 10
-      },
-      {
-        question: "Museum Nasional merupakan museum terbesar di mana?",
-        options: ["Indonesia", "Asia Tenggara", "Dunia", "Asia"],
-        correctAnswer: 1,
-        xpReward: 15
-      },
-      {
-        question: "Kapan Museum Nasional didirikan?",
-        options: ["1778", "1900", "1945", "1950"],
-        correctAnswer: 0,
         xpReward: 10
       }
     ]
@@ -489,51 +407,6 @@ const artifactsData: Artifact[] = [
     learningObjective: "Understand early Javanese inscriptions"
   },
   {
-    id: 8,
-    museumId: 3,
-    name: "Batik Belanda 'Snow White'",
-    type: "tekstil",
-    period: "Kolonial Belanda (1840-1940)",
-    description: "Batik unik karya pengrajin Indo-Eropa dengan motif dongeng Eropa (Putri Salju) namun menggunakan teknik canting tradisional Jawa.",
-    image: "https://placehold.co/400x400/FFAB91/000?text=Batik+Belanda",
-    museum: { name: "Museum Batik Danar Hadi", lat: -7.567, lng: 110.816, province: "Jawa Tengah" },
-    origin: "Pekalongan, Jawa Tengah",
-    difficulty: "expert",
-    requiredXP: 500,
-    careerRole: "Colonial Heritage Researcher",
-    learningObjective: "Evaluate Indo-European fusion in batik techniques"
-  },
-  {
-    id: 9,
-    museumId: 3,
-    name: "Batik Mega Mendung",
-    type: "tekstil",
-    period: "Mataram Islam (Abad 18)",
-    description: "Batik dengan motif awan mendung khas Cirebon. Dibuat dengan teknik celup tidar yang membutuhkan keahlian tinggi.",
-    image: "https://placehold.co/400x400/455A64/FFF?text=Batik+Mega+Mendung",
-    museum: { name: "Museum Batik Danar Hadi", lat: -7.567, lng: 110.816, province: "Jawa Tengah" },
-    origin: "Cirebon, Jawa Barat",
-    difficulty: "intermediate",
-    requiredXP: 150,
-    careerRole: "Textile Historian",
-    learningObjective: "Understand batik coastal Javanese techniques"
-  },
-  {
-    id: 10,
-    museumId: 3,
-    name: "Batik Parang",
-    type: "tekstil",
-    period: "Mataram Islam (Abad 17)",
-    description: "Motif klasik berbentuk garis miring yang melambangkan ombak Laut Selatan. Dahulu hanya boleh dikenakan keluarga keraton.",
-    image: "https://placehold.co/400x400/37474F/FFF?text=Batik+Parang",
-    museum: { name: "Museum Batik Danar Hadi", lat: -7.567, lng: 110.816, province: "Jawa Tengah" },
-    origin: "Yogyakarta & Surakarta",
-    difficulty: "beginner",
-    requiredXP: 0,
-    careerRole: "Cultural Heritage Expert",
-    learningObjective: "Understand symbolic meaning of classical motifs"
-  },
-  {
     id: 11,
     museumId: 4,
     name: "Senjata Pistol Walther",
@@ -577,51 +450,6 @@ const artifactsData: Artifact[] = [
     requiredXP: 250,
     careerRole: "Documentary Historian",
     learningObjective: "Analyze historical documents of independence"
-  },
-  {
-    id: 14,
-    museumId: 6,
-    name: "Arca Ganesha",
-    type: "arca",
-    period: "Majapahit (Abad 13-14)",
-    description: "Arca dewa gajah yang melambangkan kebijaksanaan dan keberhasilan. Ditemukan di dinding candi.",
-    image: "https://placehold.co/400x400/FF8F00/FFF?text=Arca+Ganesha",
-    museum: { name: "Museum Nasional", lat: -6.1754, lng: 106.8224, province: "DKI Jakarta" },
-    origin: "Candi Prambanan, Jawa Tengah",
-    difficulty: "advanced",
-    requiredXP: 350,
-    careerRole: "Hindu-Buddhist Art Expert",
-    learningObjective: "Understand Hindu iconography in Java"
-  },
-  {
-    id: 15,
-    museumId: 6,
-    name: "Keramik Dinasti Ming",
-    type: "keramik",
-    period: "Dinasti Ming (1368-1644)",
-    description: "Keramik Tiongkok berkualitas tinggi yang найдены di berbagai situs arkeologi Indonesia. Bukti hubungan perdagangan maritim.",
-    image: "https://placehold.co/400x400/1565C0/FFF?text=Keramik+Ming",
-    museum: { name: "Museum Nasional", lat: -6.1754, lng: 106.8224, province: "DKI Jakarta" },
-    origin: "Cina (Impor)",
-    difficulty: "intermediate",
-    requiredXP: 200,
-    careerRole: "Ceramic Specialist",
-    learningObjective: "Understand maritime trade ceramics"
-  },
-  {
-    id: 16,
-    museumId: 6,
-    name: "Manuskrip Nagarakretagama",
-    type: "manuskrip",
-    period: "Majapahit (1365)",
-    description: "Naskah pupuh yang menyebutkan keagungan Majapahit pada masa kejayaannya. Warisan sastra Jawa kuno.",
-    image: "https://placehold.co/400x400/8D6E63/FFF?text=Nagarakretagama",
-    museum: { name: "Museum Nasional", lat: -6.1754, lng: 106.8224, province: "DKI Jakarta" },
-    origin: "Majapahit",
-    difficulty: "expert",
-    requiredXP: 600,
-    careerRole: "Philologist",
-    learningObjective: "Analyze classical Javanese literature"
   },
   {
     id: 17,

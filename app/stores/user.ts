@@ -11,14 +11,14 @@ export interface Voucher {
 }
 
 export const vouchersData: Voucher[] = [
-  { id: 'v1', name: 'Diskon 20% Batik Pekalongan', description: 'Diskon 20% untuk pembelian batik di Museum Batik Danar Hadi', image: 'https://placehold.co/200x200/FFAB91/000?text=Batik', xpRequired: 100, partner: 'Museum Batik Danar Hadi', validUntil: '2026-12-31' },
-  { id: 'v2', name: 'Tiket Gratis Anak', description: '1 tiket gratis untuk anak-anak di Museum Sonobudoyo', image: 'https://placehold.co/200x200/8D6E63/FFF?text=Museum', xpRequired: 150, partner: 'Museum Sonobudoyo', validUntil: '2026-12-31' },
-  { id: 'v3', name: 'Voucher Makanan Rp50.000', description: 'Voucher makanan Rp50.000 di sekitar museums Yogyakarta', image: 'https://placehold.co/200x200/4CAF50/FFF?text=Food', xpRequired: 200, partner: 'UMKM Lokal', validUntil: '2026-12-31' },
-  { id: 'v4', name: 'Diskon 15% Kopi Lokal', description: 'Diskon 15% untuk kopi khas Yogyakarta', image: 'https://placehold.co/200x200/795548/FFF?text=Kopi', xpRequired: 75, partner: 'Kopi Lokal Yogyakarta', validUntil: '2026-12-31' },
-  { id: 'v5', name: '免费入场 Vredeburg', description: 'Tiket masuk gratis Museum Benteng Vredeburg', image: 'https://placehold.co/200x200/5D4037/FFF?text=Vredeburg', xpRequired: 120, partner: 'Museum Benteng Vredeburg', validUntil: '2026-12-31' },
-  { id: 'v6', name: 'Workshop Batik Gratis', description: '1x免费workshop batik di Museum Batik Danar Hadi', image: 'https://placehold.co/200x200/FFAB91/000?text=Workshop', xpRequired: 300, partner: 'Museum Batik Danar Hadi', validUntil: '2026-12-31' },
-  { id: 'v7', name: 'Souvenir Keramik 30% Off', description: 'Diskon 30% untuk souvenir keramik asli Yogyakarta', image: 'https://placehold.co/200x200/1565C0/FFF?text=Keramik', xpRequired: 180, partner: 'UMKM Keramik Yogyakarta', validUntil: '2026-12-31' },
-  { id: 'v8', name: 'Tea Time Set', description: 'Tea time set gratis di cafe museum terdekat', image: 'https://placehold.co/200x200/8BC34A/FFF?text=Tea', xpRequired: 50, partner: 'Museum Cafe Partners', validUntil: '2026-12-31' },
+  { id: 'v1', name: 'Tiket Gratis Anak Museum Sonobudoyo', description: '1 tiket gratis untuk anak-anak di Museum Sonobudoyo', image: 'https://placehold.co/200x200/8D6E63/FFF?text=Museum', xpRequired: 100, partner: 'Museum Sonobudoyo', validUntil: '2026-12-31' },
+  { id: 'v2', name: 'Voucher Makanan Rp50.000', description: 'Voucher makanan Rp50.000 di sekitar museums Yogyakarta', image: 'https://placehold.co/200x200/4CAF50/FFF?text=Food', xpRequired: 150, partner: 'UMKM Lokal', validUntil: '2026-12-31' },
+  { id: 'v3', name: 'Diskon 15% Kopi Lokal', description: 'Diskon 15% untuk kopi khas Yogyakarta', image: 'https://placehold.co/200x200/795548/FFF?text=Kopi', xpRequired: 75, partner: 'Kopi Lokal Yogyakarta', validUntil: '2026-12-31' },
+  { id: 'v4', name: 'Gratis Masuk Vredeburg', description: 'Tiket masuk gratis Museum Benteng Vredeburg', image: 'https://placehold.co/200x200/5D4037/FFF?text=Vredeburg', xpRequired: 120, partner: 'Museum Benteng Vredeburg', validUntil: '2026-12-31' },
+  { id: 'v5', name: 'Workshop Batik Gratis', description: '1x gratis workshop batik di Museum Ullen Sentalu', image: 'https://placehold.co/200x200/FFAB91/000?text=Workshop', xpRequired: 250, partner: 'Museum Ullen Sentalu', validUntil: '2026-12-31' },
+  { id: 'v6', name: 'Souvenir Keramik 30% Off', description: 'Diskon 30% untuk souvenir keramik asli Yogyakarta', image: 'https://placehold.co/200x200/1565C0/FFF?text=Keramik', xpRequired: 180, partner: 'UMKM Keramik Yogyakarta', validUntil: '2026-12-31' },
+  { id: 'v7', name: 'Tea Time Set', description: 'Tea time set gratis di cafe museum terdekat', image: 'https://placehold.co/200x200/8BC34A/FFF?text=Tea', xpRequired: 50, partner: 'Museum Cafe Partners', validUntil: '2026-12-31' },
+  { id: 'v8', name: 'Diskon 25% Museum Ullen Sentalu', description: 'Diskon 25% untuk tiket masuk Museum Ullen Sentalu', image: 'https://placehold.co/200x200/3A7763/FFF?text=Ullen', xpRequired: 200, partner: 'Museum Ullen Sentalu', validUntil: '2026-12-31' },
 ];
 
 // User progress and gamification state store

@@ -16,7 +16,6 @@ const categoryColors: Record<string, string> = {
   seni_dan_budaya: '#3A7763',
   sejarah: '#D97706',
   sains: '#2563EB',
-  nasional: '#7C3AED',
   perang: '#DC2626'
 };
 
@@ -24,7 +23,6 @@ const categoryIcons: Record<string, string> = {
   seni_dan_budaya: '🎨',
   sejarah: '🏛️',
   sains: '🔬',
-  nasional: '🏳️',
   perang: '⚔️'
 };
 
@@ -36,7 +34,6 @@ const categoryLabels: Record<string, string> = {
   seni_dan_budaya: 'Seni & Budaya',
   sejarah: 'Sejarah',
   sains: 'Sains',
-  nasional: 'Nasional',
   perang: 'Perang'
 };
 

@@ -23,6 +23,19 @@ const userStore = useUserStore();
           <!-- Quick actions -->
           <div class="flex items-center gap-2">
             <NuxtLink 
+              to="/scan"
+              class="px-4 py-2 text-xs font-medium text-gray-600 hover:text-[#2C5F4F] hover:bg-emerald-50 rounded-lg transition-all flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                <rect x="7" y="7" width="10" height="10" rx="1"/>
+              </svg>
+              Scan
+            </NuxtLink>
+            <NuxtLink 
               to="/shop"
               class="px-4 py-2 text-xs font-medium text-gray-600 hover:text-[#2C5F4F] hover:bg-emerald-50 rounded-lg transition-all flex items-center gap-2"
             >

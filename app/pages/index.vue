@@ -223,15 +223,15 @@ const sendChatMessage = () => {
 </script>
 
 <template>
-  <div class="h-full flex gap-4 relative">
-    <aside class="w-85 h-full overflow-hidden flex flex-col shrink-0">
+  <div class="h-full flex flex-col md:flex-row gap-2 md:gap-4 relative">
+    <aside class="w-full md:w-80 lg:w-85 h-full overflow-hidden flex flex-col shrink-0">
       <SideBar
         :user-location="userLocation"
         @show-on-map="handleSidebarMuseumClick"
       />
     </aside>
 
-    <div id="map" class="flex-1 h-full rounded-xl border border-gray-200 overflow-hidden shadow-sm"></div>
+    <div id="map" class="flex-1 min-h-[300px] md:min-h-0 h-full rounded-xl border border-gray-200 overflow-hidden shadow-sm"></div>
 
     <div 
       v-if="showChat"

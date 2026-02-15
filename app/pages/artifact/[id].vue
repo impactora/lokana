@@ -19,11 +19,6 @@ const isSubmitting = ref(false);
 const assessment = ref<any>(null);
 const showResults = ref(false);
 
-// Check if artifact is locked based on user XP
-const isLocked = computed(() => {
-  return userStore.currentXP < artifact.value!.requiredXP;
-});
-
 // Handle storytelling submission and AI grading
 const submitChallenge = async () => {
   if (userStory.value.trim().length < 50) {
@@ -106,25 +101,8 @@ const sendChatMessage = () => {
         Kembali ke Peta
       </NuxtLink>
 
-      <!-- Locked State Warning -->
-      <div v-if="isLocked" class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-lg">
-        <div class="flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-amber-600">
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-          </svg>
-          <div>
-            <h3 class="font-bold text-amber-900">Artefak Terkunci</h3>
-            <p class="text-sm text-amber-700">
-              Kamu butuh <strong>{{ artifact.requiredXP }} XP</strong> untuk membuka challenge ini. 
-              Saat ini: <strong>{{ userStore.currentXP }} XP</strong>
-            </p>
-          </div>
-        </div>
-      </div>
-
       <!-- Artifact Info -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" :class="{ 'opacity-40 pointer-events-none': isLocked }">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="aspect-square rounded-xl overflow-hidden bg-gray-100 shadow-lg">
           <img :src="artifact.image" :alt="artifact.name" class="w-full h-full object-cover" />
         </div>
@@ -175,7 +153,7 @@ const sendChatMessage = () => {
       </div>
 
       <!-- Career Challenge Section -->
-      <div v-if="!isLocked" class="mt-8 space-y-6">
+      <div class="mt-8 space-y-6">
         <div class="bg-white border-2 border-[#2C5F4F] rounded-xl p-6">
           <h2 class="text-2xl font-bold text-gray-900 mb-2">💼 Career Challenge</h2>
           <p class="text-gray-600 mb-4">

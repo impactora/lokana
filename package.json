@@ -16,6 +16,8 @@
     "@pinia/nuxt": "^0.5.1",
     "@tailwindcss/vite": "^4.1.18",
     "leaflet": "^1.9.4",
+    "lucide-react": "^0.564.0",
+    "lucide-vue-next": "^0.564.0",
     "nuxt": "^4.2.2",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",

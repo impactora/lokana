@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { museumsData, type Museum } from '~/assets/data/artifactsData';
 import artifactsData from '~/assets/data/artifactsData';
 import { useUserStore } from '~/stores/user';
+import { MapPin, Clock, ArrowRight, Filter, Search } from 'lucide-vue-next';
 
 const emit = defineEmits(['museum-click', 'show-on-map']);
 const userStore = useUserStore();

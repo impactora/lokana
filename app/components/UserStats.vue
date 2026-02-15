@@ -1,68 +1,79 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user';
+import { TrendingUp, Coins, MapPin } from 'lucide-vue-next';
 
 const userStore = useUserStore();
 </script>
 
 <template>
-  <!-- User gamification stats header -->
-  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-xl shadow-sm border border-gray-200">
-    <!-- User Info & Rank -->
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#2C5F4F] to-[#3A7763] rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-md">
-        {{ userStore.level }}
+  <div class="bg-white rounded-xl shadow-sm border border-[#6B4423]/10 p-4">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <!-- User Info & Level -->
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <div class="w-12 h-12 bg-gradient-to-br from-[#6B4423] to-[#8B6F47] rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+            {{ userStore.level }}
+          </div>
+          <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-[#D4A574] rounded-full border-2 border-white flex items-center justify-center">
+            <TrendingUp class="w-3 h-3 text-white" :stroke-width="2.5" />
+          </div>
+        </div>
+        
+        <div class="flex flex-col">
+          <span class="font-bold text-[#2D2416] text-base leading-tight">
+            {{ userStore.username }}
+          </span>
+          <span class="text-sm text-[#6B5D4F] font-medium">
+            {{ userStore.rankTitle }}
+          </span>
+        </div>
       </div>
-      
-      <div class="flex flex-col">
-        <span class="font-bold text-gray-900 text-sm leading-tight">
-          {{ userStore.username }}
-        </span>
-        <span class="text-xs text-[#2C5F4F] font-medium">
-          {{ userStore.rankTitle }}
-        </span>
+
+      <!-- Stats Grid -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- XP Progress -->
+        <div class="flex flex-col gap-1.5 min-w-[140px]">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-[#6B5D4F] font-medium">Pengalaman</span>
+            <span class="text-[#2D2416] font-bold">
+              {{ userStore.currentXP }}/{{ userStore.maxXP }}
+            </span>
+          </div>
+          <div class="w-full h-2 bg-[#6B4423]/10 rounded-full overflow-hidden">
+            <div 
+              class="h-full bg-gradient-to-r from-[#6B4423] to-[#8B6F47] transition-all duration-500 ease-out"
+              :style="{ width: `${userStore.xpProgress}%` }"
+            />
+          </div>
+        </div>
+
+        <!-- Coins -->
+        <div class="flex items-center gap-2 px-3 py-2 bg-gradient-to-br from-[#D4A574]/20 to-[#B8935F]/20 rounded-lg border border-[#D4A574]/30">
+          <Coins class="w-5 h-5 text-[#B8935F]" :stroke-width="2" />
+          <span class="font-bold text-[#6B4423] text-sm">
+            {{ userStore.coins }}
+          </span>
+        </div>
+
+        <!-- Locations Discovered -->
+        <div class="flex items-center gap-2 px-3 py-2 bg-gradient-to-br from-[#4A7C59]/20 to-[#6B9E7A]/20 rounded-lg border border-[#4A7C59]/30">
+          <MapPin class="w-5 h-5 text-[#4A7C59]" :stroke-width="2" />
+          <span class="font-bold text-[#2D2416] text-sm">
+            {{ userStore.totalUnlockedLocations }}
+          </span>
+        </div>
       </div>
     </div>
 
-    <!-- Stats - wrap on mobile -->
-    <div class="flex flex-wrap items-center gap-2 sm:gap-4">
-      <!-- XP Progress -->
-      <div class="flex flex-col gap-1 min-w-24 sm:min-w-32">
-        <div class="flex items-center justify-between text-xs">
-          <span class="text-gray-600 font-medium">XP</span>
-          <span class="text-gray-900 font-bold">
-            {{ userStore.currentXP }}/{{ userStore.maxXP }}
-          </span>
-        </div>
-        <div class="w-20 sm:w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div 
-            class="h-full bg-gradient-to-r from-[#2C5F4F] to-[#3A7763] transition-all duration-500"
-            :style="{ width: `${userStore.xpProgress}%` }"
-          />
-        </div>
-      </div>
-
-      <!-- Coins -->
-      <div class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-amber-50 rounded-lg border border-amber-200">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600 w-4 h-4 sm:w-5 sm:h-5">
-          <circle cx="12" cy="12" r="8"/>
-          <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
-          <path d="M12 18V6"/>
-        </svg>
-        <span class="font-bold text-amber-700 text-sm">
-          {{ userStore.coins }}
-        </span>
-      </div>
-
-      <!-- Unlocked Locations Badge -->
-      <div class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-emerald-50 rounded-lg border border-emerald-200">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 w-4 h-4 sm:w-5 sm:h-5">
-          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-          <circle cx="12" cy="10" r="3"/>
-        </svg>
-        <span class="font-bold text-emerald-700 text-sm">
-          {{ userStore.totalUnlockedLocations }}
-        </span>
-      </div>
+    <!-- Progress Description (Hidden on Mobile) -->
+    <div class="hidden sm:block mt-3 pt-3 border-t border-[#6B4423]/10">
+      <p class="text-xs text-[#6B5D4F]">
+        <span class="font-semibold text-[#2D2416]">{{ userStore.xpProgress }}%</span> menuju level berikutnya
+        <span class="mx-1">•</span>
+        <span class="font-semibold text-[#2D2416]">{{ userStore.visitedArtifacts.length }}</span> artefak terjelajahi
+        <span class="mx-1">•</span>
+        <span class="font-semibold text-[#2D2416]">{{ userStore.scannedMuseums.length }}</span> museum dikunjungi
+      </p>
     </div>
   </div>
 </template>

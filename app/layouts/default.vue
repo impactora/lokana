@@ -1,72 +1,163 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user';
+import { MapPin, QrCode, ShoppingBag, Map, User, RefreshCw } from 'lucide-vue-next';
 
 const userStore = useUserStore();
+const route = useRoute();
 </script>
 
 <template>
-  <div class="bg-background h-screen flex flex-col text-black overflow-hidden">
-    <div class="max-w-7xl mx-auto w-full h-full flex flex-col p-6 gap-4">
-      <!-- Header with branding and user stats -->
+  <div class="bg-[#F5F1EA] min-h-screen flex flex-col text-[#2D2416]">
+    <div class="max-w-7xl mx-auto w-full flex-1 flex flex-col p-4 md:p-6 gap-4">
+      <!-- Header -->
       <header class="shrink-0 space-y-4">
-        <div class="flex items-center justify-between p-4 rounded-xl bg-white shadow-sm border border-gray-200">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-[#FF0000] to-[#CC0000] rounded-lg flex items-center justify-center text-white font-bold shadow-md">
-              L
-            </div>
-            <div class="flex flex-col">
-              <h1 class="text-xl font-bold text-gray-900">LOKANA</h1>
-              <p class="text-xs text-gray-500">Jelajahi Jogja, Kumpulkan Cerita</p>
-            </div>
-          </div>
+        <!-- Brand & Navigation -->
+        <div class="bg-white rounded-xl shadow-sm border border-[#6B4423]/10 p-4">
+          <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <NuxtLink to="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <div class="w-10 h-10 bg-gradient-to-br from-[#6B4423] to-[#8B6F47] rounded-lg flex items-center justify-center shadow-md">
+                <MapPin class="w-5 h-5 text-white" :stroke-width="2.5" />
+              </div>
+              <div class="flex flex-col">
+                <h1 class="text-xl font-bold text-[#6B4423] font-['Libre_Baskerville']">LOKANA</h1>
+                <p class="text-xs text-[#6B5D4F]">Jogja Heritage Explorer</p>
+              </div>
+            </NuxtLink>
 
-          <!-- Quick actions -->
-          <div class="flex items-center gap-2">
-            <NuxtLink 
-              to="/scan"
-              class="px-4 py-2 text-xs font-medium text-gray-600 hover:text-[#2C5F4F] hover:bg-emerald-50 rounded-lg transition-all flex items-center gap-2"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
-                <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
-                <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
-                <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
-                <rect x="7" y="7" width="10" height="10" rx="1"/>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-2">
+              <NuxtLink 
+                to="/"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
+                :class="route.path === '/' 
+                  ? 'bg-[#6B4423] text-white' 
+                  : 'text-[#6B5D4F] hover:bg-[#6B4423]/5'"
+              >
+                <Map class="w-4 h-4" />
+                <span>Jelajah</span>
+              </NuxtLink>
+              
+              <NuxtLink 
+                to="/itinerary"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
+                :class="route.path.startsWith('/itinerary')
+                  ? 'bg-[#6B4423] text-white' 
+                  : 'text-[#6B5D4F] hover:bg-[#6B4423]/5'"
+              >
+                <MapPin class="w-4 h-4" />
+                <span>Rute</span>
+              </NuxtLink>
+
+              <NuxtLink 
+                to="/scan"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
+                :class="route.path === '/scan'
+                  ? 'bg-[#6B4423] text-white' 
+                  : 'text-[#6B5D4F] hover:bg-[#6B4423]/5'"
+              >
+                <QrCode class="w-4 h-4" />
+                <span>Scan</span>
+              </NuxtLink>
+
+              <NuxtLink 
+                to="/shop"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
+                :class="route.path === '/shop'
+                  ? 'bg-[#6B4423] text-white' 
+                  : 'text-[#6B5D4F] hover:bg-[#6B4423]/5'"
+              >
+                <ShoppingBag class="w-4 h-4" />
+                <span>Voucher</span>
+              </NuxtLink>
+
+              <NuxtLink 
+                to="/profile"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
+                :class="route.path === '/profile'
+                  ? 'bg-[#6B4423] text-white' 
+                  : 'text-[#6B5D4F] hover:bg-[#6B4423]/5'"
+              >
+                <User class="w-4 h-4" />
+                <span>Profil</span>
+              </NuxtLink>
+
+              <button 
+                @click="userStore.resetProgress()"
+                class="px-3 py-2 rounded-lg text-sm font-medium text-[#6B5D4F] hover:bg-[#6B4423]/5 transition-all"
+                title="Reset Progress"
+              >
+                <RefreshCw class="w-4 h-4" />
+              </button>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2 rounded-lg hover:bg-[#6B4423]/5">
+              <svg class="w-6 h-6 text-[#6B4423]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
-              Scan
-            </NuxtLink>
-            <NuxtLink 
-              to="/shop"
-              class="px-4 py-2 text-xs font-medium text-gray-600 hover:text-[#2C5F4F] hover:bg-emerald-50 rounded-lg transition-all flex items-center gap-2"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-              </svg>
-              Toko
-            </NuxtLink>
-            <button 
-              class="px-4 py-2 text-xs font-medium text-gray-600 hover:text-[#2C5F4F] hover:bg-emerald-50 rounded-lg transition-all flex items-center gap-2"
-              @click="userStore.resetProgress()"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 2v6h-6"/>
-                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
-                <path d="M3 22v-6h6"/>
-                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
-              </svg>
-              Reset
             </button>
           </div>
         </div>
 
+        <!-- User Stats -->
         <UserStats />
       </header>
 
-      <!-- Main content area -->
-      <main class="flex-1 min-h-0 overflow-hidden">
+      <!-- Main Content -->
+      <main class="flex-1 min-h-0">
         <slot />
       </main>
+
+      <!-- Mobile Bottom Navigation -->
+      <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#6B4423]/10 shadow-lg z-50">
+        <div class="flex items-center justify-around p-2">
+          <NuxtLink 
+            to="/"
+            class="flex flex-col items-center gap-1 p-2 rounded-lg transition-all"
+            :class="route.path === '/' ? 'text-[#6B4423]' : 'text-[#6B5D4F]'"
+          >
+            <Map class="w-5 h-5" />
+            <span class="text-xs font-medium">Jelajah</span>
+          </NuxtLink>
+
+          <NuxtLink 
+            to="/itinerary"
+            class="flex flex-col items-center gap-1 p-2 rounded-lg transition-all"
+            :class="route.path.startsWith('/itinerary') ? 'text-[#6B4423]' : 'text-[#6B5D4F]'"
+          >
+            <MapPin class="w-5 h-5" />
+            <span class="text-xs font-medium">Rute</span>
+          </NuxtLink>
+
+          <NuxtLink 
+            to="/scan"
+            class="flex flex-col items-center gap-1 p-2 rounded-lg transition-all"
+            :class="route.path === '/scan' ? 'text-[#6B4423]' : 'text-[#6B5D4F]'"
+          >
+            <QrCode class="w-5 h-5" />
+            <span class="text-xs font-medium">Scan</span>
+          </NuxtLink>
+
+          <NuxtLink 
+            to="/shop"
+            class="flex flex-col items-center gap-1 p-2 rounded-lg transition-all"
+            :class="route.path === '/shop' ? 'text-[#6B4423]' : 'text-[#6B5D4F]'"
+          >
+            <ShoppingBag class="w-5 h-5" />
+            <span class="text-xs font-medium">Voucher</span>
+          </NuxtLink>
+
+          <NuxtLink 
+            to="/profile"
+            class="flex flex-col items-center gap-1 p-2 rounded-lg transition-all"
+            :class="route.path === '/profile' ? 'text-[#6B4423]' : 'text-[#6B5D4F]'"
+          >
+            <User class="w-5 h-5" />
+            <span class="text-xs font-medium">Profil</span>
+          </NuxtLink>
+        </div>
+      </nav>
     </div>
   </div>
 </template>

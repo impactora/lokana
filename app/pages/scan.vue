@@ -48,11 +48,11 @@ const handleManualScan = () => {
     return;
   }
 
-  // Success - give XP reward
+  // Success - give XP reward (will level up and give 100 coins)
   userStore.scanMuseumQR(museumId);
   scanResult.value = {
     success: true,
-    message: `Selamat! Anda mendapat +100 XP dari Museum ${museum.name}!`,
+    message: `Selamat! Anda mendapat +100 XP dari Museum ${museum.name}! (Naik level dapat 100 coins)`,
     museum: museum
   };
   

@@ -5,20 +5,20 @@ export interface Voucher {
   name: string;
   description: string;
   image: string;
-  pointsRequired: number;
+  coinsRequired: number;
   partner: string;
   validUntil: string;
 }
 
 export const vouchersData: Voucher[] = [
-  { id: 'v1', name: 'Tiket Gratis Anak Museum Sonobudoyo', description: '1 tiket gratis untuk anak-anak di Museum Sonobudoyo', image: 'https://placehold.co/200x200/8D6E63/FFF?text=Museum', pointsRequired: 100, partner: 'Museum Sonobudoyo', validUntil: '2026-12-31' },
-  { id: 'v2', name: 'Voucher Makanan Rp50.000', description: 'Voucher makanan Rp50.000 di sekitar museums Yogyakarta', image: 'https://placehold.co/200x200/4CAF50/FFF?text=Food', pointsRequired: 150, partner: 'UMKM Lokal', validUntil: '2026-12-31' },
-  { id: 'v3', name: 'Diskon 15% Kopi Lokal', description: 'Diskon 15% untuk kopi khas Yogyakarta', image: 'https://placehold.co/200x200/795548/FFF?text=Kopi', pointsRequired: 75, partner: 'Kopi Lokal Yogyakarta', validUntil: '2026-12-31' },
-  { id: 'v4', name: 'Gratis Masuk Vredeburg', description: 'Tiket masuk gratis Museum Benteng Vredeburg', image: 'https://placehold.co/200x200/5D4037/FFF?text=Vredeburg', pointsRequired: 120, partner: 'Museum Benteng Vredeburg', validUntil: '2026-12-31' },
-  { id: 'v5', name: 'Workshop Batik Gratis', description: '1x gratis workshop batik di Museum Ullen Sentalu', image: 'https://placehold.co/200x200/FFAB91/000?text=Workshop', pointsRequired: 250, partner: 'Museum Ullen Sentalu', validUntil: '2026-12-31' },
-  { id: 'v6', name: 'Souvenir Keramik 30% Off', description: 'Diskon 30% untuk souvenir keramik asli Yogyakarta', image: 'https://placehold.co/200x200/1565C0/FFF?text=Keramik', pointsRequired: 180, partner: 'UMKM Keramik Yogyakarta', validUntil: '2026-12-31' },
-  { id: 'v7', name: 'Tea Time Set', description: 'Tea time set gratis di cafe museum terdekat', image: 'https://placehold.co/200x200/8BC34A/FFF?text=Tea', pointsRequired: 50, partner: 'Museum Cafe Partners', validUntil: '2026-12-31' },
-  { id: 'v8', name: 'Diskon 25% Museum Ullen Sentalu', description: 'Diskon 25% untuk tiket masuk Museum Ullen Sentalu', image: 'https://placehold.co/200x200/3A7763/FFF?text=Ullen', pointsRequired: 200, partner: 'Museum Ullen Sentalu', validUntil: '2026-12-31' },
+  { id: 'v1', name: 'Tiket Gratis Anak Museum Sonobudoyo', description: '1 tiket gratis untuk anak-anak di Museum Sonobudoyo', image: 'https://placehold.co/200x200/8D6E63/FFF?text=Museum', coinsRequired: 100, partner: 'Museum Sonobudoyo', validUntil: '2026-12-31' },
+  { id: 'v2', name: 'Voucher Makanan Rp50.000', description: 'Voucher makanan Rp50.000 di sekitar museums Yogyakarta', image: 'https://placehold.co/200x200/4CAF50/FFF?text=Food', coinsRequired: 150, partner: 'UMKM Lokal', validUntil: '2026-12-31' },
+  { id: 'v3', name: 'Diskon 15% Kopi Lokal', description: 'Diskon 15% untuk kopi khas Yogyakarta', image: 'https://placehold.co/200x200/795548/FFF?text=Kopi', coinsRequired: 75, partner: 'Kopi Lokal Yogyakarta', validUntil: '2026-12-31' },
+  { id: 'v4', name: 'Gratis Masuk Vredeburg', description: 'Tiket masuk gratis Museum Benteng Vredeburg', image: 'https://placehold.co/200x200/5D4037/FFF?text=Vredeburg', coinsRequired: 120, partner: 'Museum Benteng Vredeburg', validUntil: '2026-12-31' },
+  { id: 'v5', name: 'Workshop Batik Gratis', description: '1x gratis workshop batik di Museum Ullen Sentalu', image: 'https://placehold.co/200x200/FFAB91/000?text=Workshop', coinsRequired: 250, partner: 'Museum Ullen Sentalu', validUntil: '2026-12-31' },
+  { id: 'v6', name: 'Souvenir Keramik 30% Off', description: 'Diskon 30% untuk souvenir keramik asli Yogyakarta', image: 'https://placehold.co/200x200/1565C0/FFF?text=Keramik', coinsRequired: 180, partner: 'UMKM Keramik Yogyakarta', validUntil: '2026-12-31' },
+  { id: 'v7', name: 'Tea Time Set', description: 'Tea time set gratis di cafe museum terdekat', image: 'https://placehold.co/200x200/8BC34A/FFF?text=Tea', coinsRequired: 50, partner: 'Museum Cafe Partners', validUntil: '2026-12-31' },
+  { id: 'v8', name: 'Diskon 25% Museum Ullen Sentalu', description: 'Diskon 25% untuk tiket masuk Museum Ullen Sentalu', image: 'https://placehold.co/200x200/3A7763/FFF?text=Ullen', coinsRequired: 200, partner: 'Museum Ullen Sentalu', validUntil: '2026-12-31' },
 ];
 
 // User progress and gamification state store
@@ -28,7 +28,6 @@ export const useUserStore = defineStore('user', {
     level: 1,
     currentXP: 0,
     maxXP: 100,
-    points: 0,
     coins: 0,
     unlockedLocations: [] as string[],
     collectedBadges: [] as string[],
@@ -71,13 +70,13 @@ export const useUserStore = defineStore('user', {
       this.level++;
       this.currentXP -= this.maxXP;
       this.maxXP = Math.floor(this.maxXP * 1.5); // Exponential XP growth
-      this.points += 100; // 100 points per level up
-      this.coins += 50; // Bonus coins on level up
+      this.coins += 100; // 100 coins per level up
       
       // Award badge based on level
-      const badges = ['Penjelajah Pemula', 'Kolektor Budaya', 'Sejarah Lover', 'Ahli Museum', 'Master Penjaga Budaya', 'Kuncen Digital', 'Sang Legend', 'Pakar Warisan', 'Pembawa traditions', 'Sang Pahlawannya'];
-      if (this.level <= badges.length) {
-        this.collectBadge(badges[this.level - 1]);
+      const badges: string[] = ['Penjelajah Pemula', 'Kolektor Budaya', 'Sejarah Lover', 'Ahli Museum', 'Master Penjaga Budaya', 'Kuncen Digital', 'Sang Legend', 'Pakar Warisan', 'Pembawa Traditions', 'Sang Pahlawannya'];
+      const badgeName = badges[this.level - 1];
+      if (badgeName) {
+        this.collectBadge(badgeName);
       }
     },
 
@@ -110,16 +109,7 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    // Spend points on vouchers
-    spendPoints(amount: number): boolean {
-      if (this.points >= amount) {
-        this.points -= amount;
-        return true;
-      }
-      return false;
-    },
-
-    // Spend coins on rewards
+    // Spend coins on vouchers
     spendCoins(amount: number): boolean {
       if (this.coins >= amount) {
         this.coins -= amount;

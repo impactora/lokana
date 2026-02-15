@@ -53,16 +53,6 @@ const userStore = useUserStore();
         </span>
       </div>
 
-      <!-- Points -->
-      <div class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-purple-50 rounded-lg border border-purple-200">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-600 w-4 h-4 sm:w-5 sm:h-5">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-        </svg>
-        <span class="font-bold text-purple-700 text-sm">
-          {{ userStore.points }}
-        </span>
-      </div>
-
       <!-- Unlocked Locations Badge -->
       <div class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-emerald-50 rounded-lg border border-emerald-200">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 w-4 h-4 sm:w-5 sm:h-5">

@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import { museumsData, type Museum } from "~/assets/data/artifactsData";
 import artifactsData from "~/assets/data/artifactsData";
 import { useUserStore } from "~/stores/user";
+import { MapPin, Clock, Phone, DollarSign, Building2, Star, ArrowLeft, Info } from 'lucide-vue-next';
 
 const route = useRoute();
 const userStore = useUserStore();
@@ -63,13 +64,6 @@ const categoryColors: Record<string, string> = {
     perang: "bg-red-100 text-red-700 border-red-200",
 };
 
-const difficultyColors: Record<string, string> = {
-    beginner: "bg-green-100 text-green-700",
-    intermediate: "bg-yellow-100 text-yellow-700",
-    advanced: "bg-orange-100 text-orange-700",
-    expert: "bg-red-100 text-red-700",
-};
-
 const submitComment = () => {
     if (newComment.value.trim().length < 10) {
         alert("Komentar minimal 10 karakter!");
@@ -79,8 +73,8 @@ const submitComment = () => {
     setTimeout(() => {
         comments.value.unshift({
             id: Date.now(),
-            user: userStore.userName || "Pengunjung",
-            avatar: (userStore.userName || "P").charAt(0).toUpperCase(),
+            user: userStore.username || "Pengunjung",
+            avatar: (userStore.username || "P").charAt(0).toUpperCase(),
             date: new Date().toISOString().split("T")[0],
             rating: newRating.value,
             text: newComment.value,
@@ -89,38 +83,6 @@ const submitComment = () => {
         newRating.value = 5;
         isSubmittingComment.value = false;
     }, 500);
-};
-
-const showChat = ref(false);
-const chatMessages = ref([
-    {
-        id: 1,
-        type: "bot",
-        text: `Halo! Saya AI Assistant untuk ${museum.value?.name}. Ada yang bisa saya bantu tentang museum ini?`,
-    },
-]);
-const chatInput = ref("");
-
-const sendChatMessage = () => {
-    if (!chatInput.value.trim()) return;
-    chatMessages.value.push({
-        id: Date.now(),
-        type: "user",
-        text: chatInput.value,
-    });
-    const userMsg = chatInput.value;
-    chatInput.value = "";
-    setTimeout(() => {
-        chatMessages.value.push({
-            id: Date.now() + 1,
-            type: "bot",
-            text: `Terima kasih atas pertanyaan Anda tentang "${userMsg}". Untuk informasi lebih lengkap tentang ${museum.value?.name}, Anda bisa langsung mengunjungi museum ini ya!`,
-        });
-    }, 500);
-};
-
-const renderStars = (rating: number) => {
-    return "★".repeat(rating) + "☆".repeat(5 - rating);
 };
 
 const currentQuizIndex = ref(0);
@@ -185,20 +147,9 @@ const submitAnswer = () => {
         <div class="max-w-5xl mx-auto space-y-6">
             <NuxtLink
                 to="/"
-                class="inline-flex items-center gap-2 text-gray-600 hover:text-[#2C5F4F] transition-colors"
+                class="inline-flex items-center gap-2 text-gray-600 hover:text-[#6B4423] transition-colors"
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
-                    <path d="m12 19-7-7 7-7" />
-                    <path d="M19 12H5" />
-                </svg>
+                <ArrowLeft class="w-5 h-5" />
                 Kembali ke Peta
             </NuxtLink>
 
@@ -226,7 +177,7 @@ const submitAnswer = () => {
                             }}
                         </span>
                     </div>
-                    <h1 class="text-3xl md:text-4xl font-bold mb-2">
+                    <h1 class="text-3xl md:text-4xl font-bold mb-2 font-['Libre_Baskerville']">
                         {{ museum.name }}
                     </h1>
                     <div class="flex items-center gap-4">
@@ -235,7 +186,7 @@ const submitAnswer = () => {
                             v-if="museum.rating"
                             class="flex items-center gap-1"
                         >
-                            <span class="text-amber-400">★</span>
+                            <Star class="w-4 h-4 text-amber-400 fill-amber-400" />
                             <span class="font-semibold">{{
                                 museum.rating
                             }}</span>
@@ -324,7 +275,7 @@ const submitAnswer = () => {
                             <span
                                 v-for="(value, index) in museum.culturalValues"
                                 :key="index"
-                                class="px-3 py-1.5 bg-[#2C5F4F]/10 text-[#2C5F4F] text-xs font-medium rounded-full"
+                                class="px-3 py-1.5 bg-[#6B4423]/10 text-[#6B4423] text-xs font-medium rounded-full"
                             >
                                 {{ value }}
                             </span>
@@ -333,7 +284,7 @@ const submitAnswer = () => {
 
                     <div
                         v-if="museum.quiz && museum.quiz.length > 0"
-                        class="bg-gradient-to-r from-[#2C5F4F] to-[#3A7763] rounded-2xl p-6 text-white"
+                        class="bg-gradient-to-r from-[#6B4423] to-[#8B6F47] rounded-2xl p-6 text-white"
                     >
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-xl font-bold">Quiz Museum</h2>
@@ -348,8 +299,9 @@ const submitAnswer = () => {
                         </div>
 
                         <div v-if="!canDoQuiz" class="text-center py-4">
+                            <Clock class="w-8 h-8 mx-auto mb-2 text-amber-300" />
                             <p class="text-amber-300 font-semibold mb-2">
-                                ⏰ Quiz akan tersedia dalam {{ quizCooldown }}
+                                Quiz akan tersedia dalam {{ quizCooldown }}
                             </p>
                             <p class="text-sm text-white/70">
                                 Kamu sudah melakukan quiz minggu ini. Coba lagi
@@ -412,13 +364,13 @@ const submitAnswer = () => {
                                         "
                                         class="text-emerald-300 font-semibold"
                                     >
-                                        ✓ Benar! +{{ currentQuiz.xpReward }} XP
+                                        Benar! +{{ currentQuiz.xpReward }} XP
                                     </span>
                                     <span
                                         v-else
                                         class="text-red-300 font-semibold"
                                     >
-                                        ✗ Salah, jawaban yang benar:
+                                        Salah, jawaban yang benar:
                                         {{
                                             currentQuiz.options[
                                                 currentQuiz.correctAnswer
@@ -428,7 +380,7 @@ const submitAnswer = () => {
                                 </span>
                                 <button
                                     @click="nextQuiz"
-                                    class="px-4 py-2 bg-white text-[#2C5F4F] rounded-lg font-semibold text-sm hover:bg-white/90 transition-colors"
+                                    class="px-4 py-2 bg-white text-[#6B4423] rounded-lg font-semibold text-sm hover:bg-white/90 transition-colors"
                                 >
                                     {{
                                         currentQuizIndex <
@@ -451,7 +403,7 @@ const submitAnswer = () => {
 
                         <div v-else class="text-center py-4">
                             <p class="text-emerald-300 font-semibold mb-2">
-                                🎉 Semua quiz telah dijawab!
+                                Semua quiz telah dijawab!
                             </p>
                             <button
                                 @click="resetQuiz"
@@ -472,13 +424,13 @@ const submitAnswer = () => {
                         </h3>
                         <div class="space-y-3 text-sm">
                             <div class="flex items-start gap-2">
-                                <span class="text-gray-400">📍</span>
+                                <MapPin class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
                                 <span class="text-gray-600">{{
                                     museum.address
                                 }}</span>
                             </div>
                             <div class="flex items-start gap-2">
-                                <span class="text-gray-400">🕐</span>
+                                <Clock class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
                                 <span class="text-gray-600">{{
                                     museum.openingHours
                                 }}</span>
@@ -487,7 +439,7 @@ const submitAnswer = () => {
                                 v-if="museum.ticketPrice"
                                 class="flex items-start gap-2"
                             >
-                                <span class="text-gray-400">💰</span>
+                                <DollarSign class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
                                 <span class="text-gray-600">{{
                                     museum.ticketPrice
                                 }}</span>
@@ -496,7 +448,7 @@ const submitAnswer = () => {
                                 v-if="museum.phone"
                                 class="flex items-start gap-2"
                             >
-                                <span class="text-gray-400">📞</span>
+                                <Phone class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" />
                                 <span class="text-gray-600">{{
                                     museum.phone
                                 }}</span>
@@ -507,21 +459,24 @@ const submitAnswer = () => {
                     <div
                         class="bg-emerald-50 border border-emerald-200 rounded-xl p-5 flex-1"
                     >
-                        <h3 class="font-bold text-emerald-900 mb-2 text-sm">
-                            Tips Berkunjung
-                        </h3>
+                        <div class="flex items-center gap-2 mb-2">
+                            <Info class="w-4 h-4 text-emerald-700" />
+                            <h3 class="font-bold text-emerald-900 text-sm">
+                                Tips Berkunjung
+                            </h3>
+                        </div>
                         <ul class="text-sm text-emerald-800 space-y-1.5">
                             <li class="flex items-start gap-2">
-                                <span class="text-emerald-600">•</span> Datang
-                                pagi hari untuk pengalaman terbaik
+                                <span class="text-emerald-600 shrink-0">•</span>
+                                <span>Datang pagi hari untuk pengalaman terbaik</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <span class="text-emerald-600">•</span> Siapkan
-                                kamera untuk dokumentasi
+                                <span class="text-emerald-600 shrink-0">•</span>
+                                <span>Siapkan kamera untuk dokumentasi</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <span class="text-emerald-600">•</span> Ikuti
-                                tur berpemandu
+                                <span class="text-emerald-600 shrink-0">•</span>
+                                <span>Ikuti tur berpemandu</span>
                             </li>
                         </ul>
                     </div>
@@ -566,7 +521,7 @@ const submitAnswer = () => {
                 </div>
 
                 <div v-else class="text-center py-8">
-                    <div class="text-4xl mb-3">🏛️</div>
+                    <Building2 class="w-12 h-12 mx-auto mb-3 text-gray-300" />
                     <p class="text-gray-500">
                         Museum ini sedang dalam pengembangan koleksi.
                     </p>
@@ -586,7 +541,7 @@ const submitAnswer = () => {
                     >
                         <div class="flex items-start gap-3">
                             <div
-                                class="w-10 h-10 rounded-full bg-[#2C5F4F] text-white flex items-center justify-center font-bold shrink-0"
+                                class="w-10 h-10 rounded-full bg-[#6B4423] text-white flex items-center justify-center font-bold shrink-0"
                             >
                                 {{ comment.avatar }}
                             </div>
@@ -602,9 +557,14 @@ const submitAnswer = () => {
                                             >{{ comment.date }}</span
                                         >
                                     </div>
-                                    <span class="text-amber-400 text-sm">{{
-                                        renderStars(comment.rating)
-                                    }}</span>
+                                    <div class="flex gap-0.5">
+                                        <Star 
+                                            v-for="i in 5" 
+                                            :key="i"
+                                            class="w-4 h-4"
+                                            :class="i <= comment.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-300'"
+                                        />
+                                    </div>
                                 </div>
                                 <p class="text-gray-600 text-sm mt-1">
                                     {{ comment.text }}
@@ -627,28 +587,26 @@ const submitAnswer = () => {
                                 v-for="star in 5"
                                 :key="star"
                                 @click="newRating = star"
-                                class="text-2xl transition-colors"
-                                :class="
-                                    star <= newRating
-                                        ? 'text-amber-400'
-                                        : 'text-gray-300'
-                                "
+                                class="transition-colors"
                             >
-                                ★
+                                <Star 
+                                    class="w-6 h-6"
+                                    :class="star <= newRating ? 'text-amber-400 fill-amber-400' : 'text-gray-300'"
+                                />
                             </button>
                         </div>
                     </div>
                     <textarea
                         v-model="newComment"
                         placeholder="Tulis pengalaman kunjungan Anda..."
-                        class="w-full h-20 p-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2C5F4F] resize-none"
+                        class="w-full h-20 p-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#6B4423] resize-none"
                     ></textarea>
                     <button
                         @click="submitComment"
                         :disabled="
                             isSubmittingComment || newComment.trim().length < 10
                         "
-                        class="mt-3 px-6 py-2.5 bg-[#2C5F4F] text-white rounded-lg hover:bg-[#3A7763] transition-colors disabled:opacity-50 font-semibold text-sm"
+                        class="mt-3 px-6 py-2.5 bg-[#6B4423] text-white rounded-lg hover:bg-[#8B6F47] transition-colors disabled:opacity-50 font-semibold text-sm"
                     >
                         {{
                             isSubmittingComment ? "Mengirim..." : "Kirim Ulasan"
@@ -657,97 +615,5 @@ const submitAnswer = () => {
                 </div>
             </div>
         </div>
-
-        <div
-            v-if="showChat"
-            class="fixed bottom-20 right-4 w-80 md:w-96 h-[450px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50"
-        >
-            <div
-                class="bg-[#2C5F4F] text-white p-4 rounded-t-2xl flex items-center justify-between"
-            >
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl">🤖</span>
-                    <div>
-                        <p class="font-bold text-sm">AI Assistant</p>
-                        <p class="text-xs text-white/70">{{ museum.name }}</p>
-                    </div>
-                </div>
-                <button
-                    @click="showChat = false"
-                    class="text-white/80 hover:text-white"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path d="M18 6 6 18" />
-                        <path d="m6 6 12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                <div
-                    v-for="msg in chatMessages"
-                    :key="msg.id"
-                    class="flex"
-                    :class="
-                        msg.type === 'user' ? 'justify-end' : 'justify-start'
-                    "
-                >
-                    <div
-                        class="max-w-[80%] p-3 rounded-xl text-sm"
-                        :class="
-                            msg.type === 'user'
-                                ? 'bg-[#2C5F4F] text-white rounded-br-sm'
-                                : 'bg-gray-100 text-gray-800 rounded-bl-sm'
-                        "
-                    >
-                        {{ msg.text }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-3 border-t border-gray-200">
-                <div class="flex gap-2">
-                    <input
-                        v-model="chatInput"
-                        type="text"
-                        placeholder="Tanya tentang museum..."
-                        class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2C5F4F]"
-                        @keyup.enter="sendChatMessage"
-                    />
-                    <button
-                        @click="sendChatMessage"
-                        class="px-4 py-2 bg-[#2C5F4F] text-white rounded-lg hover:bg-[#3A7763] transition-colors"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-                            <path d="m22 2-7 20-4-9-9-4Z" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <button
-            @click="showChat = !showChat"
-            class="fixed bottom-4 right-4 w-14 h-14 bg-[#2C5F4F] text-white rounded-full shadow-lg hover:bg-[#3A7763] transition-all flex items-center justify-center z-50 hover:scale-110"
-        >
-            <span v-if="!showChat" class="text-2xl">💬</span>
-            <span v-else class="text-2xl">🤖</span>
-        </button>
     </div>
 </template>

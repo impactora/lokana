@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { museumsData } from '~/assets/data/artifactsData';
-import { MapPin, Clock, Navigation, Calendar, Download, Share2 } from 'lucide-vue-next';
+import { MapPin, Clock, Navigation, Calendar, Share2, Building2, Camera, Users, BookOpen } from 'lucide-vue-next';
 
 // Preset itinerary routes
 const presetRoutes = [
@@ -13,7 +13,7 @@ const presetRoutes = [
     museums: [1, 2, 4], // Ullen Sentalu, Sonobudoyo, Vredeburg
     bestTime: 'Pagi hari (08:00 - 16:00)',
     difficulty: 'Mudah',
-    icon: '🏛️'
+    icon: Building2
   },
   {
     id: 'instagram-spots',
@@ -23,7 +23,7 @@ const presetRoutes = [
     museums: [1, 5], // Ullen Sentalu, Museum Sains
     bestTime: 'Siang hari (10:00 - 16:00)',
     difficulty: 'Mudah',
-    icon: '📸'
+    icon: Camera
   },
   {
     id: 'family-friendly',
@@ -33,7 +33,7 @@ const presetRoutes = [
     museums: [5, 7, 8], // Sains, Kereta Api, Wayang
     bestTime: 'Pagi hari (09:00 - 14:00)',
     difficulty: 'Mudah',
-    icon: '👨‍👩‍👧‍👦'
+    icon: Users
   },
   {
     id: 'deep-history',
@@ -43,7 +43,7 @@ const presetRoutes = [
     museums: [2, 4, 7], // Sonobudoyo, Vredeburg, Kereta Api
     bestTime: 'Full day (08:00 - 18:00)',
     difficulty: 'Menengah',
-    icon: '📚'
+    icon: BookOpen
   }
 ];
 
@@ -129,7 +129,9 @@ const shareRoute = () => {
               : 'border-[#6B4423]/10 hover:border-[#D4A574] hover:shadow-sm'"
           >
             <div class="flex items-start gap-4">
-              <div class="text-4xl">{{ route.icon }}</div>
+              <div class="w-12 h-12 bg-[#6B4423]/10 rounded-lg flex items-center justify-center shrink-0">
+                <component :is="route.icon" class="w-6 h-6 text-[#6B4423]" />
+              </div>
               <div class="flex-1">
                 <h3 class="font-bold text-[#2D2416] mb-1">{{ route.name }}</h3>
                 <p class="text-sm text-[#6B5D4F] mb-3">{{ route.description }}</p>
@@ -165,7 +167,7 @@ const shareRoute = () => {
           >
             <div class="flex items-center gap-2 mb-2">
               <div class="w-8 h-8 rounded bg-[#6B4423]/10 flex items-center justify-center">
-                <span class="text-lg">🏛️</span>
+                <Building2 class="w-4 h-4 text-[#6B4423]" />
               </div>
               <div class="flex-1 min-w-0">
                 <h4 class="font-semibold text-xs text-[#2D2416] truncate">{{ museum.name }}</h4>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useUserStore } from '~/stores/user';
-import { Award, MapPin, Coins, TrendingUp, CheckCircle, Gift } from 'lucide-vue-next';
+import { Award, MapPin, Coins, TrendingUp, CheckCircle, Gift, Medal, Trophy, Target, BookOpen, Crown, Gem } from 'lucide-vue-next';
 import { museumsData } from '~/assets/data/artifactsData';
 import artifactsData from '~/assets/data/artifactsData';
 
@@ -31,7 +31,7 @@ const achievements = computed(() => {
   if (userStore.level >= 5) {
     data.push({
       id: 'level-5',
-      icon: '🎖️',
+      icon: Medal,
       title: 'Explorer Level 5',
       description: 'Mencapai level 5',
       unlocked: true
@@ -41,7 +41,7 @@ const achievements = computed(() => {
   if (userStore.level >= 10) {
     data.push({
       id: 'level-10',
-      icon: '🏆',
+      icon: Trophy,
       title: 'Master Level 10',
       description: 'Mencapai level 10',
       unlocked: true
@@ -52,7 +52,7 @@ const achievements = computed(() => {
   if (userStore.scannedMuseums.length >= 3) {
     data.push({
       id: 'museum-3',
-      icon: '🗺️',
+      icon: MapPin,
       title: 'Museum Explorer',
       description: 'Mengunjungi 3 museum',
       unlocked: true
@@ -62,7 +62,7 @@ const achievements = computed(() => {
   if (userStore.scannedMuseums.length >= 5) {
     data.push({
       id: 'museum-5',
-      icon: '🎯',
+      icon: Target,
       title: 'Heritage Hunter',
       description: 'Mengunjungi 5 museum',
       unlocked: true
@@ -73,7 +73,7 @@ const achievements = computed(() => {
   if (userStore.visitedArtifacts.length >= 10) {
     data.push({
       id: 'artifact-10',
-      icon: '📚',
+      icon: BookOpen,
       title: 'Artifact Collector',
       description: 'Menjelajahi 10 artefak',
       unlocked: true
@@ -84,7 +84,7 @@ const achievements = computed(() => {
   const lockedAchievements = [
     {
       id: 'complete-all',
-      icon: '👑',
+      icon: Crown,
       title: 'Heritage Master',
       description: 'Mengunjungi semua museum Jogja',
       unlocked: false,
@@ -92,7 +92,7 @@ const achievements = computed(() => {
     },
     {
       id: 'artifact-25',
-      icon: '💎',
+      icon: Gem,
       title: 'Artifact Enthusiast',
       description: 'Menjelajahi 25 artefak',
       unlocked: false,
@@ -188,7 +188,14 @@ const achievements = computed(() => {
               ? 'bg-[#D4A574]/10 border-[#D4A574]/30' 
               : 'bg-[#6B4423]/5 border-[#6B4423]/10 opacity-60'"
           >
-            <div class="text-3xl">{{ achievement.icon }}</div>
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+              :class="achievement.unlocked ? 'bg-[#D4A574]/20' : 'bg-[#6B4423]/10'"
+            >
+              <component :is="achievement.icon" 
+                class="w-6 h-6" 
+                :class="achievement.unlocked ? 'text-[#8B6F47]' : 'text-[#6B4423]/40'"
+              />
+            </div>
             <div class="flex-1 min-w-0">
               <h3 class="font-semibold text-sm text-[#2D2416] truncate">
                 {{ achievement.title }}

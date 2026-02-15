@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { museumsData, type Museum } from "~/assets/data/artifactsData";
 import artifactsData from "~/assets/data/artifactsData";
 import { useUserStore } from "~/stores/user";
@@ -10,7 +10,6 @@ const userLocation = ref<{ lat: number; lng: number } | null>(null);
 let map: any = null;
 let L: any = null;
 let markers: Record<number, any> = {};
-let hoveredMarkerId: number | null = null;
 
 const categoryColors: Record<string, string> = {
     seni_dan_budaya: "#3A7763",
@@ -19,22 +18,8 @@ const categoryColors: Record<string, string> = {
     perang: "#DC2626",
 };
 
-const categoryIcons: Record<string, string> = {
-    seni_dan_budaya: "🎨",
-    sejarah: "🏛️",
-    sains: "🔬",
-    perang: "⚔️",
-};
-
 const getArtifactCount = (museumId: number) => {
     return artifactsData.filter((a) => a.museumId === museumId).length;
-};
-
-const categoryLabels: Record<string, string> = {
-    seni_dan_budaya: "Seni & Budaya",
-    sejarah: "Sejarah",
-    sains: "Sains",
-    perang: "Perang",
 };
 
 onMounted(async () => {
@@ -42,7 +27,8 @@ onMounted(async () => {
 
     L = (await import("leaflet")).default;
 
-    map = L.map("map").setView([-2.5489, 118.0149], 5);
+    // Initialize map centered on Yogyakarta
+    map = L.map("map").setView([-7.7956, 110.3695], 12);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "© OpenStreetMap contributors",
@@ -89,18 +75,15 @@ onUnmounted(() => {
 
 const createMarkerIcon = (museum: Museum, isHovered: boolean = false) => {
     const color = categoryColors[museum.category] || "#6B7280";
-    const icon = categoryIcons[museum.category] || "🏛️";
     const artifactCount = getArtifactCount(museum.id);
     const scale = isHovered ? 1.2 : 1;
     const size = Math.round(36 * scale);
-    const iconSize = Math.round(24 * scale);
 
     return L.divIcon({
         className: "custom-marker-wrapper",
         html: `
-      <div class="custom-marker ${isHovered ? "hovered" : ""}" style="background: ${color};">
-        <span style="font-size: ${iconSize}px; line-height: ${size}px;">${icon}</span>
-        <span class="marker-count">${artifactCount}</span>
+      <div class="custom-marker ${isHovered ? "hovered" : ""}" style="background: ${color}; width: ${size}px; height: ${size}px;">
+        <span class="marker-count" style="transform: rotate(45deg);">${artifactCount}</span>
       </div>
     `,
         iconSize: [size, size],
@@ -128,7 +111,9 @@ const addMuseumMarkers = () => {
         const popupContent = `
       <div class="min-w-[260px] max-w-[300px]">
         <div class="flex items-center gap-2 border-b border-gray-100 pb-3 mb-2">
-          <span class="text-xl">🏛️</span>
+          <div class="w-8 h-8 rounded bg-[#6B4423]/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-[#6B4423]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </div>
           <div class="flex flex-col gap-0.5">
             <h3 class="font-bold text-gray-900 text-sm leading-none">
               ${museum.name}
@@ -142,7 +127,7 @@ const addMuseumMarkers = () => {
           <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 pl-1">
             ${artifactCount} artefak di koleksi
           </div>
-          <a href="/museum/${museum.id}" class="block w-full text-center px-4 py-2.5 bg-[#2C5F4F] text-white rounded-lg hover:bg-[#3A7763] transition-colors font-semibold text-sm">
+          <a href="/museum/${museum.id}" class="block w-full text-center px-4 py-2.5 bg-[#6B4423] text-white rounded-lg hover:bg-[#8B6F47] transition-colors font-semibold text-sm">
             Lihat Museum
           </a>
         </div>
@@ -152,12 +137,10 @@ const addMuseumMarkers = () => {
         marker.bindPopup(popupContent, { maxWidth: 340 });
 
         marker.on("mouseover", () => {
-            hoveredMarkerId = museum.id;
             marker.setIcon(createMarkerIcon(museum, true));
         });
 
         marker.on("mouseout", () => {
-            hoveredMarkerId = null;
             marker.setIcon(createMarkerIcon(museum, false));
         });
 
@@ -169,14 +152,7 @@ const addMuseumMarkers = () => {
     });
 };
 
-const handleMuseumClick = (museumId: number) => {
-    const museum = museumsData.find((m) => m.id === museumId);
-    if (museum && map) {
-        map.setView([museum.lat, museum.lng], 14);
-    }
-};
-
-const handleShowOnMap = (museumId: number) => {
+const handleSidebarMuseumClick = (museumId: number) => {
     const museum = museumsData.find((m) => m.id === museumId);
     if (museum && map) {
         map.setView([museum.lat, museum.lng], 14);
@@ -186,62 +162,6 @@ const handleShowOnMap = (museumId: number) => {
             marker.openPopup();
         }
     }
-};
-
-const handleSidebarMuseumClick = (museumId: number) => {
-    handleShowOnMap(museumId);
-};
-
-const showChat = ref(false);
-const chatMessages = ref([
-    {
-        id: 1,
-        type: "bot",
-        text: "Halo! Saya AI Assistant LOKANA. Ada yang bisa saya bantu hari ini? Anda bisa bertanya tentang museum, artefak, atau budaya Indonesia!",
-    },
-]);
-const chatInput = ref("");
-
-const sendChatMessage = () => {
-    if (!chatInput.value.trim()) return;
-    chatMessages.value.push({
-        id: Date.now(),
-        type: "user",
-        text: chatInput.value,
-    });
-    const userMsg = chatInput.value;
-    chatInput.value = "";
-
-    setTimeout(() => {
-        let response = "";
-        const lowerMsg = userMsg.toLowerCase();
-
-        if (
-            lowerMsg.includes("museum") ||
-            lowerMsg.includes("museum terdekat")
-        ) {
-            response =
-                "Ada banyak museum menarik di Yogyakarta! Untuk melihat semuanya, Anda bisa klik pada peta di sebelah kanan. Museum Sonobudoyo dan Museum Ullen Sentalu adalah yang paling populer!";
-        } else if (lowerMsg.includes("batik") || lowerMsg.includes("tekstil")) {
-            response =
-                "Batik adalah warisan budaya UNESCO dari Indonesia! Anda bisa mengunjungi Museum Batik Danar Hadi di Pekalongan untuk melihat koleksi batik yang luar biasa.";
-        } else if (lowerMsg.includes("sejarah") || lowerMsg.includes("jarah")) {
-            response =
-                "Yogyakarta memiliki rich sejarah sebagai pusat kerajaan Jawa! Museum Benteng Vredeburg menceritakan perjuangan pahlawan Indonesia.";
-        } else if (lowerMsg.includes("artefak") || lowerMsg.includes("arca")) {
-            response =
-                "Artefak-artefak menarik bisa Anda temukan di Museum Sonobudoyo, seperti Arca Prajnaparamita dan Keris Empu Gandring!";
-        } else {
-            response =
-                "Terima kasih atas pertanyaannya! Anda bisa menjelajahi museum di peta atau menggunakan sidebar untuk mencari museum tertentu.";
-        }
-
-        chatMessages.value.push({
-            id: Date.now() + 1,
-            type: "bot",
-            text: response,
-        });
-    }, 500);
 };
 </script>
 
@@ -260,105 +180,11 @@ const sendChatMessage = () => {
             id="map"
             class="flex-1 min-h-[300px] md:min-h-0 h-full rounded-xl border border-gray-200 overflow-hidden shadow-sm"
         ></div>
-
-        <div
-            v-if="showChat"
-            class="fixed bottom-20 right-4 w-80 md:w-96 h-[450px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50"
-        >
-            <div
-                class="bg-[#2C5F4F] text-white p-4 rounded-t-2xl flex items-center justify-between"
-            >
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl">🤖</span>
-                    <div>
-                        <p class="font-bold text-sm">AI Assistant</p>
-                        <p class="text-xs text-white/70">LOKANA</p>
-                    </div>
-                </div>
-                <button
-                    @click="showChat = false"
-                    class="text-white/80 hover:text-white"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path d="M18 6 6 18" />
-                        <path d="m6 6 12 12" />
-                    </svg>
-                </button>
-            </div>
-
-            <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                <div
-                    v-for="msg in chatMessages"
-                    :key="msg.id"
-                    class="flex"
-                    :class="
-                        msg.type === 'user' ? 'justify-end' : 'justify-start'
-                    "
-                >
-                    <div
-                        class="max-w-[80%] p-3 rounded-xl text-sm"
-                        :class="
-                            msg.type === 'user'
-                                ? 'bg-[#2C5F4F] text-white rounded-br-sm'
-                                : 'bg-gray-100 text-gray-800 rounded-bl-sm'
-                        "
-                    >
-                        {{ msg.text }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="p-3 border-t border-gray-200">
-                <div class="flex gap-2">
-                    <input
-                        v-model="chatInput"
-                        type="text"
-                        placeholder="Apa yang ingin Anda tahu?"
-                        class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2C5F4F]"
-                        @keyup.enter="sendChatMessage"
-                    />
-                    <button
-                        @click="sendChatMessage"
-                        class="px-4 py-2 bg-[#2C5F4F] text-white rounded-lg hover:bg-[#3A7763] transition-colors"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                        >
-                            <path d="m22 2-7 20-4-9-9-4Z" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <button
-            @click="showChat = !showChat"
-            class="fixed bottom-4 right-4 w-14 h-14 bg-[#2C5F4F] text-white rounded-full shadow-lg hover:bg-[#3A7763] transition-all flex items-center justify-center z-50 hover:scale-110"
-        >
-            <span v-if="!showChat" class="text-2xl">💬</span>
-            <span v-else class="text-2xl">🤖</span>
-        </button>
     </div>
 </template>
 
 <style scoped>
 :deep(.custom-marker) {
-    width: 36px !important;
-    height: 36px !important;
     border-radius: 50% 50% 50% 0 !important;
     transform: rotate(-45deg) !important;
     display: flex !important;
@@ -367,16 +193,13 @@ const sendChatMessage = () => {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3) !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
+    border: 3px solid white !important;
 }
 
 :deep(.custom-marker.hovered) {
-    transform: rotate(-45deg) scale(1.2) !important;
+    transform: rotate(-45deg) scale(1.15) !important;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) !important;
     z-index: 1000 !important;
-}
-
-:deep(.custom-marker span) {
-    transform: rotate(45deg) !important;
 }
 
 :deep(.marker-count) {
@@ -398,5 +221,11 @@ const sendChatMessage = () => {
 
 :deep(.leaflet-popup-content) {
     margin: 12px 14px;
+}
+
+/* Ensure map container has proper size */
+#map {
+    position: relative;
+    z-index: 0;
 }
 </style>

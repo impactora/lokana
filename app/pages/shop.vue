@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useUserStore, vouchersData } from "~/stores/user";
+import { Gift, Info, ArrowLeft } from 'lucide-vue-next';
 
 const userStore = useUserStore();
 
@@ -35,36 +36,30 @@ const handleRedeem = (voucherId: string, coinsRequired: number) => {
 </script>
 
 <template>
-    <div class="h-full overflow-y-auto p-4 md:p-6">
+    <div class="h-full overflow-y-auto p-4 md:p-6 pb-20">
         <div class="max-w-5xl mx-auto space-y-6">
             <div class="flex items-center justify-between">
                 <NuxtLink
                     to="/"
-                    class="inline-flex items-center gap-2 text-gray-600 hover:text-[#2C5F4F] transition-colors"
+                    class="inline-flex items-center gap-2 text-gray-600 hover:text-[#6B4423] transition-colors"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path d="m12 19-7-7 7-7" />
-                        <path d="M19 12H5" />
-                    </svg>
+                    <ArrowLeft class="w-5 h-5" />
                     Kembali ke Peta
                 </NuxtLink>
             </div>
 
             <div
-                class="bg-gradient-to-r from-[#2C5F4F] to-[#3A7763] rounded-2xl p-6 text-white"
+                class="bg-gradient-to-r from-[#6B4423] to-[#8B6F47] rounded-2xl p-6 text-white"
             >
-                <h1 class="text-3xl font-bold mb-2">🎁 Toko Voucher</h1>
-                <p class="text-white/80">
-                    Tukar coins Anda dengan voucher menarik dari partner kami!
-                </p>
+                <div class="flex items-center gap-3 mb-3">
+                    <Gift class="w-10 h-10" />
+                    <div>
+                        <h1 class="text-3xl font-bold font-['Libre_Baskerville']">Toko Voucher</h1>
+                        <p class="text-white/80">
+                            Tukar coins Anda dengan voucher menarik dari partner kami!
+                        </p>
+                    </div>
+                </div>
                 <div class="mt-4 flex items-center gap-4">
                     <div class="bg-white/20 px-4 py-2 rounded-lg">
                         <span class="text-sm">Coins Anda:</span>
@@ -92,9 +87,11 @@ const handleRedeem = (voucherId: string, coinsRequired: number) => {
                             class="absolute inset-0 bg-black/50 flex items-center justify-center"
                         >
                             <span
-                                class="bg-emerald-500 text-white px-4 py-2 rounded-full font-bold"
-                                >✓ Sudah Ditukar</span
+                                class="bg-emerald-500 text-white px-4 py-2 rounded-full font-bold flex items-center gap-2"
                             >
+                                <Gift class="w-4 h-4" />
+                                Sudah Ditukar
+                            </span>
                         </div>
                     </div>
 
@@ -117,7 +114,7 @@ const handleRedeem = (voucherId: string, coinsRequired: number) => {
                         >
                             <div>
                                 <span class="text-xs text-gray-500">Harga:</span>
-                                <p class="text-lg font-bold text-[#2C5F4F]">
+                                <p class="text-lg font-bold text-[#6B4423]">
                                     {{ voucher.coinsRequired }} Coins
                                 </p>
                             </div>
@@ -129,7 +126,7 @@ const handleRedeem = (voucherId: string, coinsRequired: number) => {
                                     userStore.isVoucherRedeemed(voucher.id)
                                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                         : canRedeem(voucher.coinsRequired)
-                                        ? 'bg-[#2C5F4F] text-white hover:bg-[#3A7763]'
+                                        ? 'bg-[#6B4423] text-white hover:bg-[#8B6F47]'
                                         : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                 "
                             >
@@ -149,7 +146,10 @@ const handleRedeem = (voucherId: string, coinsRequired: number) => {
             </div>
 
             <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                <h3 class="font-bold text-amber-800 mb-2">ℹ️ Cara Menukar</h3>
+                <div class="flex items-center gap-2 mb-2">
+                    <Info class="w-5 h-5 text-amber-700" />
+                    <h3 class="font-bold text-amber-800">Cara Menukar</h3>
+                </div>
                 <ul class="text-sm text-amber-700 space-y-1">
                     <li>1. Scan QR code di museum partner untuk dapat 100XP</li>
                     <li>2. Setiap naik level mendapat 100 coins</li>

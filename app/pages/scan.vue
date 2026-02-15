@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { museumsData } from '~/assets/data/artifactsData';
 import { useUserStore } from '~/stores/user';
+import { QrCode, CheckCircle, XCircle, PartyPopper, ArrowLeft, Smartphone } from 'lucide-vue-next';
 
 const userStore = useUserStore();
 
@@ -66,49 +67,42 @@ const resetScan = () => {
 </script>
 
 <template>
-  <div class="h-full overflow-y-auto p-4 md:p-6">
+  <div class="h-full overflow-y-auto p-4 md:p-6 pb-20">
     <div class="max-w-lg mx-auto space-y-6">
-      <NuxtLink to="/" class="inline-flex items-center gap-2 text-gray-600 hover:text-[#2C5F4F] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="m12 19-7-7 7-7"/>
-          <path d="M19 12H5"/>
-        </svg>
+      <NuxtLink to="/" class="inline-flex items-center gap-2 text-gray-600 hover:text-[#6B4423] transition-colors">
+        <ArrowLeft class="w-5 h-5" />
         Kembali ke Peta
       </NuxtLink>
 
-      <div class="bg-gradient-to-r from-[#2C5F4F] to-[#3A7763] rounded-2xl p-6 text-white text-center">
-        <div class="text-5xl mb-4">📱</div>
-        <h1 class="text-2xl font-bold mb-2">Scan QR Museum</h1>
+      <div class="bg-gradient-to-r from-[#6B4423] to-[#8B6F47] rounded-2xl p-6 text-white text-center">
+        <div class="flex items-center justify-center mb-4">
+          <Smartphone class="w-16 h-16" />
+        </div>
+        <h1 class="text-2xl font-bold mb-2 font-['Libre_Baskerville']">Scan QR Museum</h1>
         <p class="text-white/80">Pindai QR code di museum partner untuk mendapat 100 XP!</p>
       </div>
 
       <div class="bg-white border border-gray-200 rounded-2xl p-6">
         <div class="text-center mb-6">
           <div class="w-20 h-20 mx-auto mb-4 bg-emerald-100 rounded-full flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
-              <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
-              <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
-              <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
-              <rect x="7" y="7" width="10" height="10" rx="1"/>
-            </svg>
+            <QrCode class="w-10 h-10 text-emerald-600" />
           </div>
           <h2 class="text-lg font-bold text-gray-900 mb-2">Cara Menggunakan</h2>
           <ol class="text-sm text-gray-600 text-left space-y-2 max-w-xs mx-auto">
             <li class="flex gap-2">
-              <span class="font-bold text-[#2C5F4F]">1.</span>
+              <span class="font-bold text-[#6B4423]">1.</span>
               Kunjungi museum partner LOKANA
             </li>
             <li class="flex gap-2">
-              <span class="font-bold text-[#2C5F4F]">2.</span>
+              <span class="font-bold text-[#6B4423]">2.</span>
               Cari QR code di lokasi museum
             </li>
             <li class="flex gap-2">
-              <span class="font-bold text-[#2C5F4F]">3.</span>
+              <span class="font-bold text-[#6B4423]">3.</span>
               Pindai atau masukkan kode manual
             </li>
             <li class="flex gap-2">
-              <span class="font-bold text-[#2C5F4F]">4.</span>
+              <span class="font-bold text-[#6B4423]">4.</span>
               Dapatkan 100 XP langsung!
             </li>
           </ol>
@@ -123,14 +117,14 @@ const resetScan = () => {
               v-model="scannedCode"
               type="text"
               placeholder="Contoh: LOKANA-MUSEUM-1"
-              class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2C5F4F] focus:border-transparent text-center font-mono"
+              class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6B4423] focus:border-transparent text-center font-mono"
               @keyup.enter="handleManualScan"
             />
           </div>
           
           <button
             @click="handleManualScan"
-            class="w-full py-3 bg-[#2C5F4F] text-white rounded-lg font-semibold hover:bg-[#3A7763] transition-colors"
+            class="w-full py-3 bg-[#6B4423] text-white rounded-lg font-semibold hover:bg-[#8B6F47] transition-colors"
           >
             Klaim XP
           </button>
@@ -139,7 +133,10 @@ const resetScan = () => {
 
       <div v-if="scanResult" class="bg-white border-2 rounded-2xl p-6" :class="scanResult.success ? 'border-emerald-500 bg-emerald-50' : 'border-red-500 bg-red-50'">
         <div class="text-center">
-          <div class="text-4xl mb-3">{{ scanResult.success ? '🎉' : '❌' }}</div>
+          <div class="flex items-center justify-center mb-3">
+            <PartyPopper v-if="scanResult.success" class="w-12 h-12 text-emerald-600" />
+            <XCircle v-else class="w-12 h-12 text-red-600" />
+          </div>
           <h3 class="font-bold text-lg mb-2" :class="scanResult.success ? 'text-emerald-800' : 'text-red-800'">
             {{ scanResult.success ? 'Berhasil!' : 'Gagal' }}
           </h3>
@@ -163,11 +160,15 @@ const resetScan = () => {
         <div class="space-y-2">
           <div v-for="museum in museumsData" :key="museum.id" class="flex items-center justify-between text-sm">
             <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full" :class="userStore.hasScannedMuseum(museum.id) ? 'bg-emerald-500' : 'bg-gray-300'"></span>
+              <CheckCircle 
+                class="w-4 h-4" 
+                :class="userStore.hasScannedMuseum(museum.id) ? 'text-emerald-500' : 'text-gray-300'"
+              />
               <span class="text-gray-600">{{ museum.name }}</span>
             </div>
-            <span v-if="userStore.hasScannedMuseum(museum.id)" class="text-emerald-600 text-xs font-medium">
-              ✓ Sudah Dipindai
+            <span v-if="userStore.hasScannedMuseum(museum.id)" class="text-emerald-600 text-xs font-medium flex items-center gap-1">
+              <CheckCircle class="w-3 h-3" />
+              Sudah Dipindai
             </span>
           </div>
         </div>

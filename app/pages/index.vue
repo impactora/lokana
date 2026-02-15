@@ -224,7 +224,7 @@ const sendChatMessage = () => {
 
 <template>
   <div class="h-full flex gap-4 relative">
-    <aside class="w-85 h-full overflow-hidden flex flex-col shrink-0">
+    <aside class="w-85 h-full overflow-hidden flex flex-col shrink-0 pl-2">
       <SideBar
         :user-location="userLocation"
         @show-on-map="handleSidebarMuseumClick"
